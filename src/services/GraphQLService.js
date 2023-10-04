@@ -1,42 +1,12 @@
+import awsConfig from "@/aws-exports.js";
+import AWSAppSyncClient from "aws-appsync";
+import { API } from "@aws-amplify/api"
+
+API.configure(awsConfig);
 
 export const GraphQLService = {
 
-    async query() {
-
-        // TODO: this should be fetched from aws-exports.js
-        const awsConfig = {
-            "aws_project_region": "eu-north-1",
-            "aws_appsync_graphqlEndpoint": "https://h2glte7jfnbora55msrqlajk74.appsync-api.eu-north-1.amazonaws.com/graphql",
-            "aws_appsync_region": "eu-north-1",
-            "aws_appsync_authenticationType": "API_KEY",
-            "aws_appsync_apiKey": "da2-xb25tegtr5bqdhi6nuhnks2yyy"
-        };
-
-
-        const listTodoItems = /* GraphQL */ `
-  query ListTodoItems(
-    $filter: ModelTodoItemFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listTodoItems(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        createdAt
-        text
-        done
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-  }
-`;
-
-        const query = listTodoItems;
-        const variables = {};
-        
+    async query(query, variables) {
         const opts = {
             method: 'POST',
             headers:
@@ -54,11 +24,21 @@ export const GraphQLService = {
         };
 
         const url = awsConfig["aws_appsync_graphqlEndpoint"];
-        console.log(url);
 
-        // const response = await fetch(url, opts);
-        // return response.json();
-        return { data: { listTodoItems: { items: [ { text: "Hello!", done: true } ] } } };
+        const response = await fetch(url, opts);
+        return response.json();
+        // return { data: { listTodoItems: { items: [ { text: "Hello!", done: true } ] } } };
+    },
+
+    async subscribe(query, callback) {
+        API.graphql({
+            query,
+            variables: {},
+            authMode: 'API_KEY',
+        }).subscribe({
+            next: (data) => {
+                callback(data.value.data.onCreateTodoItem);
+            }
+        });
     }
-
 };

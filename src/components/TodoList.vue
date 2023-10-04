@@ -1,13 +1,18 @@
 <script setup>
 import { ref } from "vue";
-import { GraphQLService } from "@/services/GraphQLService";
+import { TodoItemService } from "@/services/TodoItemService";
 import TodoItem from "@/components/TodoItem.vue";
 
 const isLoading = ref(true);
 const todoItems = ref([]);
-GraphQLService.query().then((items) => {
-    todoItems.value = items.data.listTodoItems.items;
+TodoItemService.list().then((items) => {
+    console.log(items);
+    todoItems.value = items;
     isLoading.value = false;
+});
+
+TodoItemService.onCreate(addedItem => {
+    todoItems.value.push(addedItem);
 });
 
 const $inputAddItem = ref(null);
@@ -15,7 +20,8 @@ function addItem() {
     const text = $inputAddItem.value.value;
     if (typeof text == "string" && text.length > 0) {
         $inputAddItem.value.value = "";
-        todoItems.value.push({ text, done: false });
+        TodoItemService.create({ text, done: false });
+        // todoItems.value.push({ text, done: false });
     }
     // TODO: publish to Pub/Sub
 }
@@ -34,15 +40,8 @@ function addItem() {
 </template>
 
 <style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
-}
-
 .todoList-add {
     margin-top: 8px;
-    margin-left: 14px;
+    margin-left: 20px;
 }
 </style>

@@ -15,6 +15,7 @@ import TodoList from './components/TodoList.vue'
 <style scoped>
 header {
   line-height: 1.5;
+  margin-bottom: 12px;
 }
 
 .logo {
