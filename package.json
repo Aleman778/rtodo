@@ -1,0 +1,37 @@
+{
+  "name": "rtodo",
+  "version": "1.0.0",
+  "description": "Realtime Todo App written in Javascript using vue.js, DynamoDB and AppSync",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aleman778/rtodo.git"
+  },
+  "keywords": [
+    "vue",
+    "DynamoDB",
+    "AppSync"
+  ],
+  "author": "Alexander Mennborg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aleman778/rtodo/issues"
+  },
+  "homepage": "https://github.com/Aleman778/rtodo#readme",
+  "dependencies": {
+    "aws-amplify": "^5.3.11",
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.3.4",
+    "@vitejs/plugin-vue-jsx": "^3.0.2",
+    "vite": "^4.4.9"
+  }
+}

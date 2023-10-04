@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-rtodo-dev-193737-authRole",
+      "UnauthRoleArn": "arn:aws:iam::203237131122:role/amplify-rtodo-dev-193737-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::203237131122:role/amplify-rtodo-dev-193737-authRole",
+      "Region": "eu-north-1",
+      "DeploymentBucketName": "amplify-rtodo-dev-193737-deployment",
+      "UnauthRoleName": "amplify-rtodo-dev-193737-unauthRole",
+      "StackName": "amplify-rtodo-dev-193737",
+      "StackId": "arn:aws:cloudformation:eu-north-1:203237131122:stack/amplify-rtodo-dev-193737/9eeea070-62dc-11ee-a3ad-0a40b8bbe2ba",
+      "AmplifyAppId": "drhpd3qmup084"
+    },
+    "categories": {
+      "api": {
+        "rtodo": {}
+      }
+    }
+  }
+}
