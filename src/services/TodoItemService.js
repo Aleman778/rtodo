@@ -1,6 +1,6 @@
 import { GraphQLService } from "@/services/GraphQLService";
 import { listTodoItems } from "@/graphql/queries.js";
-import { createTodoItem } from "@/graphql/mutations.js";
+import { createTodoItem, updateTodoItem, deleteTodoItem } from "@/graphql/mutations.js";
 import { onCreateTodoItem, onUpdateTodoItem, onDeleteTodoItem } from "@/graphql/subscriptions.js";
 
 export const TodoItemService = {
@@ -15,15 +15,31 @@ export const TodoItemService = {
         await GraphQLService.query(createTodoItem, { input: todoItem });
     },
 
+    async update(todoItem) {
+        await GraphQLService.query(updateTodoItem, {
+            input: {
+                id: todoItem.id, name: todoItem.name, done: todoItem.done
+            }
+        });
+    },
+
+    async delete(todoItem) {
+        await GraphQLService.query(deleteTodoItem, {
+            input: {
+                id: todoItem.id, name: todoItem.name, done: todoItem.done
+            }
+        });
+    },
+
     async onCreate(callback) {
-        await GraphQLService.subscribe(onCreateTodoItem, callback);
+        await GraphQLService.subscribe(onCreateTodoItem, data => callback(data.value.data.onCreateTodoItem));
     },
 
     async onUpdate(callback) {
-        await GraphQLService.subscribe(onUpdate, callback);
+        await GraphQLService.subscribe(onUpdateTodoItem, data => callback(data.value.data.onUpdateTodoItem));
     },
 
     async onDelete(callback) {
-        await GraphQLService.subscribe(onCreateTodoItem, callback);
+        await GraphQLService.subscribe(onDeleteTodoItem, data => callback(data.value.data.onDeleteTodoItem));
     }
 }

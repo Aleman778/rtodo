@@ -15,15 +15,21 @@ TodoItemService.onCreate(addedItem => {
     todoItems.value.push(addedItem);
 });
 
+TodoItemService.onUpdate(updatedItem => {
+    const oldItem = todoItems.value.find(it => it.id === updatedItem.id);
+    if (oldItem) {
+        oldItem.name = updatedItem.name;
+        oldItem.done = updatedItem.done;
+    }
+});
+
 const $inputAddItem = ref(null);
 function addItem() {
     const text = $inputAddItem.value.value;
     if (typeof text == "string" && text.length > 0) {
         $inputAddItem.value.value = "";
         TodoItemService.create({ text, done: false });
-        // todoItems.value.push({ text, done: false });
     }
-    // TODO: publish to Pub/Sub
 }
 </script>
 

@@ -1,5 +1,4 @@
 import awsConfig from "@/aws-exports.js";
-import AWSAppSyncClient from "aws-appsync";
 import { API } from "@aws-amplify/api"
 
 API.configure(awsConfig);
@@ -37,7 +36,7 @@ export const GraphQLService = {
             authMode: 'API_KEY',
         }).subscribe({
             next: (data) => {
-                callback(data.value.data.onCreateTodoItem);
+                callback(data);
             }
         });
     }
