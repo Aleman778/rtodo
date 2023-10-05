@@ -7,7 +7,6 @@ export const TodoItemService = {
 
     async list() {
         const response = await GraphQLService.query(listTodoItems, {});
-        console.log(response);
         return response.data.listTodoItems.items;
     },
 
@@ -18,16 +17,14 @@ export const TodoItemService = {
     async update(todoItem) {
         await GraphQLService.query(updateTodoItem, {
             input: {
-                id: todoItem.id, name: todoItem.name, done: todoItem.done
+                id: todoItem.id, text: todoItem.text, done: todoItem.done
             }
         });
     },
 
     async delete(todoItem) {
         await GraphQLService.query(deleteTodoItem, {
-            input: {
-                id: todoItem.id, name: todoItem.name, done: todoItem.done
-            }
+            input: { id: todoItem.id }
         });
     },
 

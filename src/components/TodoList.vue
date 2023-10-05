@@ -6,7 +6,6 @@ import TodoItem from "@/components/TodoItem.vue";
 const isLoading = ref(true);
 const todoItems = ref([]);
 TodoItemService.list().then((items) => {
-    console.log(items);
     todoItems.value = items;
     isLoading.value = false;
 });
@@ -18,9 +17,13 @@ TodoItemService.onCreate(addedItem => {
 TodoItemService.onUpdate(updatedItem => {
     const oldItem = todoItems.value.find(it => it.id === updatedItem.id);
     if (oldItem) {
-        oldItem.name = updatedItem.name;
+        oldItem.text = updatedItem.text;
         oldItem.done = updatedItem.done;
     }
+});
+
+TodoItemService.onDelete(deletedItem => {
+    todoItems.value = todoItems.value.filter(it => it.id !== deletedItem.id);
 });
 
 const $inputAddItem = ref(null);
